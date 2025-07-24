@@ -1,5 +1,6 @@
 import React from 'react'
 import Intro from './components/Intro'
+import BackgroundWrapper from './components/BackgroundWrapper'
 
 function App() {
   const [startScreen, setStartScreen] = React.useState(true)
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <main>
+      <BackgroundWrapper/>
       {startScreen && (<Intro startQuiz={startQuiz}/>)}
       {!startScreen && (
         <>

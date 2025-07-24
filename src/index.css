@@ -27,6 +27,27 @@ body {
   justify-content: center;
   text-align: center;
   justify-items: center;
+  position: relative; /* ⬅️ Make body the positioning context and below for bkg*/
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-img {
+  position: absolute;
+  height: auto;
+  opacity: 0.9;
+  z-index: -1;
+  pointer-events: none; /* Optional: ensures images don’t interfere with clicks */
+}
+
+.bg-img.left {
+  bottom: -12%;
+  left: -14%;
+}
+
+.bg-img.right {
+  top: -23%;
+  right: -52%;
 }
 
 main { /* so that you skip placing flex on every division*/
@@ -42,6 +63,7 @@ h1{
 
 }
 
+/* STARTER SCREEN */
 .starter-btn{
   color: #F5F7FB;
   background-color: #4D5B9E;
