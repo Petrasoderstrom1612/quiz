@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 
 function App() {
   const [questions, setQuestions] = React.useState({
@@ -7,6 +7,12 @@ function App() {
     correctAnswer: "",
     answers: [],
   })
+
+  React.useEffect(()=>{
+    fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
+    .then(res => res.json())
+    .then(data => console.log(data))
+  },[])
 
   return (
     <>
