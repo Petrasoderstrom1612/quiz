@@ -1,3 +1,3 @@
 # React + Vite
 
-Own project
+Own project - quiz with an api call
