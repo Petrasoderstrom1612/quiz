@@ -15,18 +15,40 @@
 }
 
 body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    padding: 20px;
-    height: 100vh;
-    color: #293264;
+  margin: 0;
+  font-family: "Karla", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  padding: 20px;
+  height: 100vh;
+  color: #293264;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  justify-items: center;
 }
 
 main { /* so that you skip placing flex on every division*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  justify-items: center;
+}
+
+h1{
+  font-family: "Karla", sans-serif;
+
+}
+
+.starter-btn{
+  color: #F5F7FB;
+  background-color: #4D5B9E;
+  border-radius: 15px;
+  width: 193px;
+  height: 52px;
+  border: 1px solid #4D5B9E;
+  font-size:16px;
+  font-family: "Karla", sans-serif;
 }
