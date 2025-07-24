@@ -1,7 +1,12 @@
 import { useState } from 'react'
 
 function App() {
-  
+  const [questions, setQuestions] = React.useState({
+    id: 0,
+    question: "",
+    correctAnswer: "",
+    answers: [],
+  })
 
   return (
     <>
