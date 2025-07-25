@@ -8,12 +8,12 @@ function App() {
   const [answersSubmitted, setAnswersSubmitted] = React.useState(false)
   const [questions, setQuestions] = React.useState(null) //for restart of the game, otherwise no change
   const [answers, setAnswers] = React.useState({}) 
+  const [totalScore, setTotalScore] = React.useState(0) 
 
   const startQuiz = () => {
     setStartScreen(prevStatus => !prevStatus)
   }
-  console.log(startScreen)
-
+  
   const combineAllAnswers = (correct, incorrect) => {
     const allAnswers = [...incorrect]
     const randomIndex = Math.floor(Math.random() * (incorrect.length + 1))
@@ -23,16 +23,16 @@ function App() {
   
   React.useEffect(()=>{
     const fetchData = async () => {
-    const res = await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
-    const data = await res.json()
-
-    const readyQuestions = data.results.map(question => ({
-      ...question, allAnswers: combineAllAnswers(question.correct_answer, question.incorrect_answers)
-    }))
-
-    setQuestions(readyQuestions)
+      const res = await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
+      const data = await res.json()
+      
+      const readyQuestions = data.results.map(question => ({
+        ...question, allAnswers: combineAllAnswers(question.correct_answer, question.incorrect_answers)
+      }))
+      
+      setQuestions(readyQuestions)
     }
-
+    
     fetchData()
   },[])
   console.log("questions",questions)
@@ -42,13 +42,13 @@ function App() {
   ? questions.map((oneQuestion, questionIndex) => { 
     const allAnswersArr = oneQuestion.allAnswers
     return (
-    <div key={oneQuestion.question} className="question-block">
+      <div key={oneQuestion.question} className="question-block">
       <h2>{decode(oneQuestion.question)}</h2>
 
   {/*MAPPING OVER ANSWERS */}
       <div className="answers-btns-div">
       {allAnswersArr.map((oneAnswer, answerIndex) => (
-      <div key={oneAnswer} className="answer-wrapper">
+        <div key={oneAnswer} className="answer-wrapper">
         <input 
         type="radio" 
         id={`${questionIndex}-${answerIndex}`}
@@ -60,7 +60,7 @@ function App() {
         />
         <button
         type="button"
-        onClick={()=> setAnswers(prev => ({...prev, [questionIndex]: oneAnswer}))} //doing the { 0 : firstAnswer, 1 : secondAnswer} in the state
+        onClick={()=> handleAnswerClick(questionIndex, oneAnswer)} //doing the { 0 : firstAnswer, 1 : secondAnswer} in the state
         className={`answer-btn ${answers[questionIndex] === oneAnswer ? "selected" : ""}`}
         aria-pressed={answers[questionIndex] === oneAnswer}
         >
@@ -71,14 +71,39 @@ function App() {
         <hr className="divider" />
     </div>
 )})
-  : null
+: null
 
-  console.log(answers)
+console.log(answers)
 
-  const checkAnswers = () => {
-    setAnswersSubmitted(prev => !prev)
+const handleAnswerClick = (questionIndex, oneAnswer) => {
+  setAnswers(prev => ({...prev, [questionIndex]: oneAnswer}))
+  console.log(questions, "questions")
+  console.log(answers, "answers")
+}
+
+const checkAnswers = () => {
+
+  questions.forEach((question, index) => {
+  const correct = decode(question.correct_answer)
+  console.log(correct, "correct")
+  const userAnswer = decode(answers[index])
+  console.log("userAnswer", userAnswer)
+
+  if(userAnswer === correct) {
+    setTotalScore(prev => prev + 1)
   }
 
+  console.log(totalScore)
+})
+
+  setAnswersSubmitted(prev => !prev)
+}
+
+
+const newGame = () => {
+  setStartScreen(prev => !prev)
+  console.log("new game")
+}
   return (
     <main>
       <BackgroundWrapper/>
@@ -89,7 +114,7 @@ function App() {
           {questionSection}
         </div>
         { !answersSubmitted && <button className="check-answers-btn" onClick={checkAnswers}>Check answers</button>}
-        {answersSubmitted && <button>Play again</button>}
+        {answersSubmitted && <section className="gameover"><h3>You scored {totalScore} / {questions.length} correct answers</h3> <button className="purple-btn" onClick={newGame}>Play again</button></section>}
         </>
       )}
     </main>

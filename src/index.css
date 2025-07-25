@@ -73,7 +73,7 @@ h1{
 }
 
 /* STARTER SCREEN */
-.starter-btn{
+.purple-btn{
   color: #F5F7FB;
   background-color: #4D5B9E;
   border-radius: 15px;
@@ -137,6 +137,14 @@ h1{
   border-bottom: 1px solid #DBDEF0;
 }
 
+.green-bkg{
+  background-color: #94D7A2;
+}
+
+.red-bkg{
+  background-color: #F8BCBC;
+}
+
 /* CHECK ANSWERS BTN*/
 .check-answers-btn{
   color: #F5F7FB;
@@ -147,4 +155,11 @@ h1{
   border: 1px solid #4D5B9E;
   font-size:16px;
   font-family: "Karla", sans-serif;
+}
+
+/* GAME OVER*/
+.gameover{
+  display: flex;
+  align-items: center;
+  gap: 2em;
 }
