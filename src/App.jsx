@@ -31,16 +31,21 @@ function App() {
     const correctAnswer = oneQuestion.correct_answer
     const wrongAnswers = oneQuestion.incorrect_answers
     const randomIndex = Math.floor(Math.random() * wrongAnswers.length + 1) // Pick a random index between 0 and arr.length as it will be 4 items in it
-    const allQuestionsArr = wrongAnswers.splice(randomIndex,0,correctAnswer) // Insert without removing any elements (deleteCount = 0)
-    console.log(randomIndex)
-    console.log(wrongAnswers)
-    console.log(allQuestionsArr)
+    const allAnswersArr = [...wrongAnswers.slice(0, randomIndex), correctAnswer, ...wrongAnswers.slice(randomIndex)] // ...-gather together| the first part to chop|item to insert|the other chopped part of the arr
+    console.log("randomIndex",randomIndex)
+    console.log("correctAnswer",correctAnswer)
+    console.log("wrongAnswers",wrongAnswers)
+    console.log("allAnswersArr",allAnswersArr)
     return (
-    <>
-      <h2 key={oneQuestion.question}>{decode(oneQuestion.question)}</h2>
-      {/* <input type="radio" defaultChecked={false} name="answer" value={answer} />
-      <label>{answer}</label> */}
-    </>
+    <div key={oneQuestion.question}>
+      <h2>{decode(oneQuestion.question)}</h2>
+
+      {allAnswersArr.map(oneAnswer => (
+      <>
+      <input key={oneAnswer}type="radio" defaultChecked={false} name="answer" value={oneAnswer} />
+      <label>{oneAnswer}</label>
+      </>))}
+    </div>
 )})
   : null
 
