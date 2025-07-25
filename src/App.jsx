@@ -33,9 +33,9 @@ function App() {
     const wrongAnswers = oneQuestion.incorrect_answers
     const randomIndex = Math.floor(Math.random() * wrongAnswers.length + 1) // Pick a random index between 0 and arr.length as it will be 4 items in it
     const allAnswersArr = [...wrongAnswers.slice(0, randomIndex), correctAnswer, ...wrongAnswers.slice(randomIndex)] // ...-gather together| the first part to chop|item to insert|the other chopped part of the arr
-    console.log("correctAnswer",correctAnswer)
-    console.log("wrongAnswers",wrongAnswers)
-    console.log("allAnswersArr",allAnswersArr)
+    // console.log("correctAnswer",correctAnswer)
+    // console.log("wrongAnswers",wrongAnswers)
+    // console.log("allAnswersArr",allAnswersArr)
     return (
     <div key={oneQuestion.question} className="question-block">
       <h2>{decode(oneQuestion.question)}</h2>
@@ -46,18 +46,18 @@ function App() {
       <div key={oneAnswer} className="answer-wrapper">
         <input 
         type="radio" 
-        id={oneAnswer}
+        id={`${questionIndex}-${answerIndex}`}
         value={oneAnswer}
-        name={`answer-${oneAnswer}`}
-        checked={answers[oneAnswer] === oneAnswer}
-        onChange={()=> setAnswers(prev => ({...prev, [oneAnswer]: oneAnswer}))}
+        name={`answer-${questionIndex}`}
+        checked={answers[questionIndex] === oneAnswer}
         className="hidden"
+        readOnly //to avoid react warning
         />
         <button
         type="button"
-        className={`answer-btn ${answers === oneAnswer[oneAnswer] ? "selected" : ""}`}
-        aria-pressed={answers === oneAnswer}
-        aria-labelledby={oneAnswer}
+        onClick={()=> setAnswers(prev => ({...prev, [questionIndex]: oneAnswer}))} //doing the { 0 : firstAnswer, 1 : secondAnswer} in the state
+        className={`answer-btn ${answers[questionIndex] === oneAnswer ? "selected" : ""}`}
+        aria-pressed={answers[questionIndex] === oneAnswer}
         >
         {decode(oneAnswer)}
         </button>
@@ -67,6 +67,8 @@ function App() {
     </div>
 )})
   : null
+
+  console.log(answers)
 
   return (
     <main>
