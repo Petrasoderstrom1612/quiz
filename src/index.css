@@ -32,6 +32,14 @@ body {
   overflow-x: hidden;
 }
 
+#root{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  justify-items: center;
+}
+
 .bg-img {
   position: absolute;
   height: auto;
@@ -56,6 +64,7 @@ main { /* so that you skip placing flex on every division*/
   justify-content: center;
   text-align: center;
   justify-items: center;
+  align-items: center;
 }
 
 h1{
@@ -75,14 +84,24 @@ h1{
   font-family: "Karla", sans-serif;
 }
 
-/* ANSWER BTNS*/
+/* QUESTIONS*/
 .hidden {
   display: none;
 }
 
+.questions-div{
+  display: inline-block;
+  max-width: fit-content;
+}
+
 .answer-wrapper {
   display: inline-block;
-  margin: 5px;
+}
+
+.answers-btns-div{
+display: flex;
+justify-content: center;
+gap: 1em;
 }
 
 .answer-btn {
@@ -107,4 +126,9 @@ h1{
   color: #293264;
   border: 1px solid #293264;
   background-color: #D6DBF5;
+}
+
+.divider{
+  margin-top: 2em;
+    margin-bottom: 2.5em;
 }

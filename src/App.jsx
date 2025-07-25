@@ -32,14 +32,14 @@ function App() {
     const wrongAnswers = oneQuestion.incorrect_answers
     const randomIndex = Math.floor(Math.random() * wrongAnswers.length + 1) // Pick a random index between 0 and arr.length as it will be 4 items in it
     const allAnswersArr = [...wrongAnswers.slice(0, randomIndex), correctAnswer, ...wrongAnswers.slice(randomIndex)] // ...-gather together| the first part to chop|item to insert|the other chopped part of the arr
-    console.log("randomIndex",randomIndex)
     console.log("correctAnswer",correctAnswer)
     console.log("wrongAnswers",wrongAnswers)
     console.log("allAnswersArr",allAnswersArr)
     return (
-    <div key={oneQuestion.question}>
+    <div key={oneQuestion.question} className="question-block">
       <h2>{decode(oneQuestion.question)}</h2>
 
+      <div className="answers-btns-div">
       {allAnswersArr.map(oneAnswer => (
       <div key={oneAnswer} className="answer-wrapper">
         <input 
@@ -61,6 +61,8 @@ function App() {
         {decode(oneAnswer)}
         </button>
       </div>))}
+      </div>
+        <hr className="divider" />
     </div>
 )})
   : null
@@ -70,9 +72,9 @@ function App() {
       <BackgroundWrapper/>
       {startScreen && (<Intro startQuiz={startQuiz}/>)}
       {!startScreen && (
-        <>
+        <div className="questions-div">
         {questionSection}
-        </>
+        </div>
       )}
     </main>
   )
