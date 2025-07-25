@@ -6,7 +6,7 @@ import {decode} from 'html-entities';
 function App() {
   const [startScreen, setStartScreen] = React.useState(false)
   const [questions, setQuestions] = React.useState(null)
-  const [answer, setAnswer] = React.useState(null)
+  const [selectedAnswer, setSelectedAnswer] = React.useState(null)
 
   const startQuiz = () => {
     setStartScreen(prevStatus => !prevStatus)
@@ -41,10 +41,26 @@ function App() {
       <h2>{decode(oneQuestion.question)}</h2>
 
       {allAnswersArr.map(oneAnswer => (
-      <>
-      <input key={oneAnswer}type="radio" defaultChecked={false} name="answer" value={oneAnswer} />
-      <label>{oneAnswer}</label>
-      </>))}
+      <div key={oneAnswer} className="answer-wrapper">
+        <input 
+        type="radio" 
+        id={oneAnswer}
+        value={oneAnswer}
+        name="answer"
+        checked={selectedAnswer === oneAnswer}
+        onChange={()=> setSelectedAnswer(oneAnswer)}
+        className="hidden"
+        />
+        <button
+        type="button"
+        onClick={() => setSelectedAnswer(oneAnswer)}
+        className={`answer-btn ${selectedAnswer === oneAnswer ? "selected" : ""}`}
+        aria-pressed={selectedAnswer === oneAnswer}
+        aria-labelledby={oneAnswer}
+        >
+        {decode(oneAnswer)}
+        </button>
+      </div>))}
     </div>
 )})
   : null
