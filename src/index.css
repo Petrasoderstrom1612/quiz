@@ -120,10 +120,11 @@ h1{
   transition: background-color 0.2s, border-color 0.2s;
   align-items: center;
   text-align: center;
+  min-height: fit-content;
 }
 
-.answer-button.selected,
-.answer-button:hover {
+.answer-btn.selected,
+.answer-btn:hover {
   color: #293264;
   border: 1px solid #293264;
   background-color: #D6DBF5;
@@ -134,4 +135,16 @@ h1{
   margin-bottom: 2.5em;
   border: none;
   border-bottom: 1px solid #DBDEF0;
+}
+
+/* CHECK ANSWERS BTN*/
+.check-answers-btn{
+  color: #F5F7FB;
+  background-color: #4D5B9E;
+  border-radius: 15px;
+  width: 193px;
+  height: 52px;
+  border: 1px solid #4D5B9E;
+  font-size:16px;
+  font-family: "Karla", sans-serif;
 }

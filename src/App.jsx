@@ -5,8 +5,8 @@ import {decode} from 'html-entities';
 
 function App() {
   const [startScreen, setStartScreen] = React.useState(false)
-  const [questions, setQuestions] = React.useState(null)
-  const [selectedAnswer, setSelectedAnswer] = React.useState(null)
+  const [questions, setQuestions] = React.useState(null) //for restart of the game, otherwise no change
+  const [answers, setAnswers] = React.useState({}) 
 
   const startQuiz = () => {
     setStartScreen(prevStatus => !prevStatus)
@@ -27,7 +27,7 @@ function App() {
   console.log("questions",questions)
   
   const questionSection = questions
-  ? questions.map(oneQuestion => {
+  ? questions.map((oneQuestion, questionIndex) => {
     const correctAnswer = oneQuestion.correct_answer
     const wrongAnswers = oneQuestion.incorrect_answers
     const randomIndex = Math.floor(Math.random() * wrongAnswers.length + 1) // Pick a random index between 0 and arr.length as it will be 4 items in it
@@ -40,22 +40,22 @@ function App() {
       <h2>{decode(oneQuestion.question)}</h2>
 
       <div className="answers-btns-div">
-      {allAnswersArr.map(oneAnswer => (
+      {allAnswersArr.map((oneAnswer, answerIndex) => (
       <div key={oneAnswer} className="answer-wrapper">
         <input 
         type="radio" 
         id={oneAnswer}
         value={oneAnswer}
-        name="answer"
-        checked={selectedAnswer === oneAnswer}
-        onChange={()=> setSelectedAnswer(oneAnswer)}
+        name={`answer-${questionIndex}`}
+        onChange={()=> setAnswers(prev => ({...prev, [answerIndex]: selectedAnswer}))}
+        checked={answers === oneAnswer}
         className="hidden"
         />
         <button
         type="button"
-        onClick={() => setSelectedAnswer(oneAnswer)}
-        className={`answer-btn ${selectedAnswer === oneAnswer ? "selected" : ""}`}
-        aria-pressed={selectedAnswer === oneAnswer}
+        onClick={()=> setAnswers(prev => ({...prev, [answerIndex]: selectedAnswer}))}
+        className={`answer-btn ${answers === oneAnswer ? "selected" : ""}`}
+        aria-pressed={answers === oneAnswer}
         aria-labelledby={oneAnswer}
         >
         {decode(oneAnswer)}
@@ -72,9 +72,12 @@ function App() {
       <BackgroundWrapper/>
       {startScreen && (<Intro startQuiz={startQuiz}/>)}
       {!startScreen && (
+        <>
         <div className="questions-div">
-        {questionSection}
+          {questionSection}
         </div>
+        <button className="check-answers-btn">Check answers</button>
+        </>
       )}
     </main>
   )
