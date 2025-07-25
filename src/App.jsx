@@ -27,7 +27,8 @@ function App() {
   console.log("questions",questions)
   
   const questionSection = questions
-  ? questions.map((oneQuestion, questionIndex) => {
+  //MAPPING OVER QUESTIONS
+  ? questions.map((oneQuestion, questionIndex) => { 
     const correctAnswer = oneQuestion.correct_answer
     const wrongAnswers = oneQuestion.incorrect_answers
     const randomIndex = Math.floor(Math.random() * wrongAnswers.length + 1) // Pick a random index between 0 and arr.length as it will be 4 items in it
@@ -39,6 +40,7 @@ function App() {
     <div key={oneQuestion.question} className="question-block">
       <h2>{decode(oneQuestion.question)}</h2>
 
+  {/*MAPPING OVER ANSWERS */}
       <div className="answers-btns-div">
       {allAnswersArr.map((oneAnswer, answerIndex) => (
       <div key={oneAnswer} className="answer-wrapper">
