@@ -99,12 +99,13 @@ h1{
 }
 
 .answers-btns-div{
-display: flex;
-justify-content: center;
-gap: 1em;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
 }
 
 .answer-btn {
+  font-family: "Karla", sans-serif;
   padding: 10px 20px;
   border-radius: 5px;
   color: #293264;
@@ -130,5 +131,7 @@ gap: 1em;
 
 .divider{
   margin-top: 2em;
-    margin-bottom: 2.5em;
+  margin-bottom: 2.5em;
+  border: none;
+  border-bottom: 1px solid #DBDEF0;
 }
