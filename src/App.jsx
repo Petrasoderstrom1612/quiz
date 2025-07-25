@@ -4,7 +4,8 @@ import BackgroundWrapper from './components/BackgroundWrapper'
 import {decode} from 'html-entities';
 
 function App() {
-  const [startScreen, setStartScreen] = React.useState(false)
+  const [startScreen, setStartScreen] = React.useState(true)
+  const [answersSubmitted, setAnswersSubmitted] = React.useState(false)
   const [questions, setQuestions] = React.useState(null) //for restart of the game, otherwise no change
   const [answers, setAnswers] = React.useState({}) 
 
@@ -74,6 +75,10 @@ function App() {
 
   console.log(answers)
 
+  const checkAnswers = () => {
+    setAnswersSubmitted(prev => !prev)
+  }
+
   return (
     <main>
       <BackgroundWrapper/>
@@ -83,7 +88,8 @@ function App() {
         <div className="questions-div">
           {questionSection}
         </div>
-        <button className="check-answers-btn">Check answers</button>
+        { !answersSubmitted && <button className="check-answers-btn" onClick={checkAnswers}>Check answers</button>}
+        {answersSubmitted && <button>Play again</button>}
         </>
       )}
     </main>
