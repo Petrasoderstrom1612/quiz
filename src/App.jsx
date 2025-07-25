@@ -12,30 +12,34 @@ function App() {
     setStartScreen(prevStatus => !prevStatus)
   }
   console.log(startScreen)
+
+  const combineAllAnswers = (correct, incorrect) => {
+    const allAnswers = [...incorrect]
+    const randomIndex = Math.floor(Math.random() * (incorrect.length + 1))
+    allAnswers.splice(randomIndex,0, correct)
+    return allAnswers
+  }
   
   React.useEffect(()=>{
-    const timeoutId = setTimeout(() => {
-    fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
-    .then(res => res.json())
-    .then(data => {
-      setQuestions(data.results)
-    })
-    }, 2000);
+    const fetchData = async () => {
+    const res = await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
+    const data = await res.json()
 
-    return () => clearTimeout(timeoutId);
+    const readyQuestions = data.results.map(question => ({
+      ...question, allAnswers: combineAllAnswers(question.correct_answer, question.incorrect_answers)
+    }))
+
+    setQuestions(readyQuestions)
+    }
+
+    fetchData()
   },[])
   console.log("questions",questions)
   
   const questionSection = questions
   //MAPPING OVER QUESTIONS
   ? questions.map((oneQuestion, questionIndex) => { 
-    const correctAnswer = oneQuestion.correct_answer
-    const wrongAnswers = oneQuestion.incorrect_answers
-    const randomIndex = Math.floor(Math.random() * wrongAnswers.length + 1) // Pick a random index between 0 and arr.length as it will be 4 items in it
-    const allAnswersArr = [...wrongAnswers.slice(0, randomIndex), correctAnswer, ...wrongAnswers.slice(randomIndex)] // ...-gather together| the first part to chop|item to insert|the other chopped part of the arr
-    // console.log("correctAnswer",correctAnswer)
-    // console.log("wrongAnswers",wrongAnswers)
-    // console.log("allAnswersArr",allAnswersArr)
+    const allAnswersArr = oneQuestion.allAnswers
     return (
     <div key={oneQuestion.question} className="question-block">
       <h2>{decode(oneQuestion.question)}</h2>
