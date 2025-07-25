@@ -46,15 +46,14 @@ function App() {
         type="radio" 
         id={oneAnswer}
         value={oneAnswer}
-        name={`answer-${questionIndex}`}
-        onChange={()=> setAnswers(prev => ({...prev, [answerIndex]: selectedAnswer}))}
-        checked={answers === oneAnswer}
+        name={`answer-${oneAnswer}`}
+        checked={answers[oneAnswer] === oneAnswer}
+        onChange={()=> setAnswers(prev => ({...prev, [oneAnswer]: oneAnswer}))}
         className="hidden"
         />
         <button
         type="button"
-        onClick={()=> setAnswers(prev => ({...prev, [answerIndex]: selectedAnswer}))}
-        className={`answer-btn ${answers === oneAnswer ? "selected" : ""}`}
+        className={`answer-btn ${answers === oneAnswer[oneAnswer] ? "selected" : ""}`}
         aria-pressed={answers === oneAnswer}
         aria-labelledby={oneAnswer}
         >
