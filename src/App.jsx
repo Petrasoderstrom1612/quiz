@@ -65,7 +65,10 @@ function App() {
         <button
         type="button"
         onClick={()=> saveAnswer(questionIndex, oneAnswer)} //doing the { 0 : firstAnswer, 1 : secondAnswer} in the state
-        className={`answer-btn ${answers[questionIndex] === oneAnswer ? "selected" : ""}`}
+        className={clsx("answer-btn", 
+          answers[questionIndex] === oneAnswer && !allAnswersSubmitted && "selected", 
+          allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer === oneQuestion.correct_answer && "green", 
+          allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer !== oneQuestion.correct_answer && "red")}
         aria-pressed={answers[questionIndex] === oneAnswer}
         >
         {decode(oneAnswer)}
@@ -89,7 +92,6 @@ const checkAnswers = () => {
   questions.forEach((question, index) => {
   const correctAnswer = decode(question.correct_answer)
   const userAnswer = decode(answers[index])
-  // const wrongUserAnswer = userAnswer && !correct
   setUserAnswers(prev => [...prev, userAnswer])
 
   if(userAnswer === correctAnswer) {
