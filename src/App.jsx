@@ -3,6 +3,7 @@ import Intro from './components/Intro'
 import BackgroundWrapper from './components/BackgroundWrapper'
 import {decode} from 'html-entities';
 import { clsx } from 'clsx';
+import Confetti from './components/Confetti';
 
 function App() {
   const [startScreen, setStartScreen] = React.useState(true)
@@ -117,12 +118,13 @@ const checkAnswers = () => {
     <main>
       <BackgroundWrapper/>
       {startScreen && (<Intro startQuiz={startQuiz}/>)}
-      {!startScreen && (
+      {!startScreen && questions && (
         <>
         <div className="questions-div">
           {questionSection}
         </div>
         { !allAnswersSubmitted && <button className="purple-btn" onClick={checkAnswers} disabled={(questions?.length) !== Object.keys(userAnswers).length}>Check answers</button>}
+        { allAnswersSubmitted && totalScore === questions.length && <Confetti/>}
         {allAnswersSubmitted && <section className="gameover"><h3>You scored {totalScore} / {questions.length} correct answers</h3> <button className="purple-btn" onClick={newGame}>Play again</button></section>}
         </>
       )}
@@ -134,4 +136,3 @@ export default App
 
 // I need to disable btn to check answers if not all answered
 // once correct answers are revealed, let the blind user know
-// add confetti if all answers correct
