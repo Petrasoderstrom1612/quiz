@@ -122,7 +122,7 @@ const checkAnswers = () => {
         <div className="questions-div">
           {questionSection}
         </div>
-        { !allAnswersSubmitted && <button className="check-answers-btn" onClick={checkAnswers}>Check answers</button>}
+        { !allAnswersSubmitted && <button className="purple-btn" onClick={checkAnswers} disabled={(questions?.length) !== Object.keys(userAnswers).length}>Check answers</button>}
         {allAnswersSubmitted && <section className="gameover"><h3>You scored {totalScore} / {questions.length} correct answers</h3> <button className="purple-btn" onClick={newGame}>Play again</button></section>}
         </>
       )}
