@@ -134,5 +134,5 @@ const checkAnswers = () => {
 
 export default App
 
-// I need to disable btn to check answers if not all answered
+// I need to disable btn to check answers if not all answered for blind user
 // once correct answers are revealed, let the blind user know
