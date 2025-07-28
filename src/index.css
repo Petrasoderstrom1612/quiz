@@ -145,6 +145,10 @@ h1{
   background-color: #F8BCBC;
 }
 
+.correct-not-selected{
+  border:1px solid #17c73c;
+}
+
 /* CHECK ANSWERS BTN*/
 .check-answers-btn{
   color: #F5F7FB;

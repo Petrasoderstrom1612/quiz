@@ -79,7 +79,9 @@ function App() {
         className={clsx("answer-btn", 
           answers[questionIndex] === oneAnswer && !allAnswersSubmitted && "selected", 
           allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer === oneQuestion.correct_answer && "green", 
-          allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer !== oneQuestion.correct_answer && "red")}
+          allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer !== oneQuestion.correct_answer && "red",
+          allAnswersSubmitted && answers[questionIndex] !== oneAnswer && oneAnswer === oneQuestion.correct_answer && "correct-not-selected"
+        )}
         aria-pressed={answers[questionIndex] === oneAnswer}
         >
         {decode(oneAnswer)}
