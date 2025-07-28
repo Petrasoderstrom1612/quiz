@@ -15,6 +15,15 @@ function App() {
   const startQuiz = () => {
     setStartScreen(prevStatus => !prevStatus)
   }
+
+  const newGame = () => {
+    setStartScreen(prev => !prev)
+    setAllAnswersSubmitted(false)
+    setAnswers({})
+    setUserAnswers([])
+    setTotalScore(0)
+    console.log("new game")
+  }
   
   const combineAllAnswers = (correct, incorrect) => {
     const allAnswers = [...incorrect]
@@ -24,6 +33,7 @@ function App() {
   }
   
   React.useEffect(()=>{
+    if(startScreen !== true){
     const fetchData = async () => {
       const res = await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
       const data = await res.json()
@@ -36,7 +46,8 @@ function App() {
     }
     
     fetchData()
-  },[])
+  }
+  },[startScreen])
   console.log("all data ready",questions)
   
   const questionSection = questions
@@ -102,11 +113,6 @@ const checkAnswers = () => {
   setAllAnswersSubmitted(prev => !prev)
 }
 
-
-const newGame = () => {
-  setStartScreen(prev => !prev)
-  console.log("new game")
-}
   return (
     <main>
       <BackgroundWrapper/>
