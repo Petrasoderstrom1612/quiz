@@ -8,8 +8,7 @@ function App() {
   const [startScreen, setStartScreen] = React.useState(true)
   const [allAnswersSubmitted, setAllAnswersSubmitted] = React.useState(false)
   const [questions, setQuestions] = React.useState(null) //Gathering the entire API call
-  const [answers, setAnswers] = React.useState({}) //to combine all 4 answer options
-  const [userAnswers, setUserAnswers] = React.useState([])
+  const [userAnswers, setUserAnswers] = React.useState({}) //user answers
   const [totalScore, setTotalScore] = React.useState(0) 
 
   const startQuiz = () => {
@@ -19,8 +18,7 @@ function App() {
   const newGame = () => {
     setStartScreen(prev => !prev)
     setAllAnswersSubmitted(false)
-    setAnswers({})
-    setUserAnswers([])
+    setUserAnswers({})
     setTotalScore(0)
     console.log("new game")
   }
@@ -69,7 +67,7 @@ function App() {
         id={`${questionIndex}-${answerIndex}`}
         value={oneAnswer}
         name={`answer-${questionIndex}`}
-        checked={answers[questionIndex] === oneAnswer}
+        checked={userAnswers[questionIndex] === oneAnswer}
         className="hidden"
         readOnly //to avoid react warning
         />
@@ -77,12 +75,12 @@ function App() {
         type="button"
         onClick={()=> saveAnswer(questionIndex, oneAnswer)} //doing the { 0 : firstAnswer, 1 : secondAnswer} in the state
         className={clsx("answer-btn", 
-          answers[questionIndex] === oneAnswer && !allAnswersSubmitted && "selected", 
-          allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer === oneQuestion.correct_answer && "green", 
-          allAnswersSubmitted && answers[questionIndex] === oneAnswer && oneAnswer !== oneQuestion.correct_answer && "red",
-          allAnswersSubmitted && answers[questionIndex] !== oneAnswer && oneAnswer === oneQuestion.correct_answer && "correct-not-selected"
+          userAnswers[questionIndex] === oneAnswer && !allAnswersSubmitted && "selected", 
+          allAnswersSubmitted && userAnswers[questionIndex] === oneAnswer && oneAnswer === oneQuestion.correct_answer && "green", 
+          allAnswersSubmitted && userAnswers[questionIndex] === oneAnswer && oneAnswer !== oneQuestion.correct_answer && "red",
+          allAnswersSubmitted && userAnswers[questionIndex] !== oneAnswer && oneAnswer === oneQuestion.correct_answer && "correct-not-selected"
         )}
-        aria-pressed={answers[questionIndex] === oneAnswer}
+        aria-pressed={userAnswers[questionIndex] === oneAnswer}
         >
         {decode(oneAnswer)}
         </button>
@@ -93,19 +91,18 @@ function App() {
 )})
 : null
 
-console.log(answers)
+console.log(userAnswers)
 
 const saveAnswer = (questionIndex, oneAnswer) => {
-  setAnswers(prev => ({...prev, [questionIndex]: oneAnswer}))
+  setUserAnswers(prev => ({...prev, [questionIndex]: oneAnswer}))
   console.log(questions, "questions")
-  console.log(answers, "answers")
+  console.log(userAnswers, "userAnswers")
 }
 
 const checkAnswers = () => {
   questions.forEach((question, index) => {
   const correctAnswer = decode(question.correct_answer)
-  const userAnswer = decode(answers[index])
-  setUserAnswers(prev => [...prev, userAnswer])
+  const userAnswer = decode(userAnswers[index])
 
   if(userAnswer === correctAnswer) {
     setTotalScore(prev => prev + 1)
