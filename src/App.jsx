@@ -123,9 +123,29 @@ const checkAnswers = () => {
         <div className="questions-div">
           {questionSection}
         </div>
-        { !allAnswersSubmitted && <button className="purple-btn" onClick={checkAnswers} disabled={(questions?.length) !== Object.keys(userAnswers).length}>Check answers</button>}
-        { allAnswersSubmitted && totalScore === questions.length && <Confetti/>}
-        {allAnswersSubmitted && <section className="gameover"><h3>You scored {totalScore} / {questions.length} correct answers</h3> <button className="purple-btn" onClick={newGame}>Play again</button></section>}
+
+        { !allAnswersSubmitted && 
+        <button 
+        className="purple-btn" 
+        onClick={checkAnswers} 
+        disabled={(questions?.length) !== Object.keys(userAnswers).length} 
+        aria-disabled={(questions?.length) !== Object.keys(userAnswers).length}
+        aria-live="polite"
+        title={(questions?.length) !== Object.keys(userAnswers).length ? "Answer all questions to enable this button" : "Click to check your answers"}
+        >
+        Check answers
+        </button>}
+
+        { allAnswersSubmitted && totalScore === questions.length && (<Confetti/>)}
+        {allAnswersSubmitted && 
+          <section className="gameover">
+          <h3>You scored {totalScore} / {questions.length} correct answers</h3> 
+          <section className="sr-only" aria-live="polite" role="game result">
+            <p>You scored {totalScore} correct answers our of {questions.length}</p>
+            <p>Press the 'Play again' button to play again and see if {totalScore === questions.length ? "you can keep your streak going" : "you can score 100% correct this time"}</p>
+          </section>
+          <button className="purple-btn" onClick={newGame}>Play again</button>
+        </section>}
         </>
       )}
     </main>
@@ -134,5 +154,3 @@ const checkAnswers = () => {
 
 export default App
 
-// I need to disable btn to check answers if not all answered for blind user
-// once correct answers are revealed, let the blind user know

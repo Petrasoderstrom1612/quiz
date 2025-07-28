@@ -93,7 +93,7 @@ h1{
 }
 
 .purple-btn:disabled:hover::after {
-  content: "You have to answer all the questions in order to submit this quiz";
+  content: "Answer all the questions in order to submit this quiz";
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
