@@ -6,10 +6,10 @@ import { clsx } from 'clsx';
 
 function App() {
   const [startScreen, setStartScreen] = React.useState(true)
-  const [allAnswersSubmitted, setAllAnswersSubmitted] = React.useState(false)
   const [questions, setQuestions] = React.useState(null) //Gathering the entire API call
   const [userAnswers, setUserAnswers] = React.useState({}) //user answers
   const [totalScore, setTotalScore] = React.useState(0) 
+  const [allAnswersSubmitted, setAllAnswersSubmitted] = React.useState(false)
 
   const startQuiz = () => {
     setStartScreen(prevStatus => !prevStatus)
@@ -75,10 +75,11 @@ function App() {
         type="button"
         onClick={()=> saveAnswer(questionIndex, oneAnswer)} //doing the { 0 : firstAnswer, 1 : secondAnswer} in the state
         className={clsx("answer-btn", 
-          userAnswers[questionIndex] === oneAnswer && !allAnswersSubmitted && "selected", 
-          allAnswersSubmitted && userAnswers[questionIndex] === oneAnswer && oneAnswer === oneQuestion.correct_answer && "green", 
-          allAnswersSubmitted && userAnswers[questionIndex] === oneAnswer && oneAnswer !== oneQuestion.correct_answer && "red",
-          allAnswersSubmitted && userAnswers[questionIndex] !== oneAnswer && oneAnswer === oneQuestion.correct_answer && "correct-not-selected"
+          oneAnswer === userAnswers[questionIndex] && !allAnswersSubmitted && "selected", //this one answer we are looping over is the answer selected by the user by saveAnswer onClick AND checkAnswers button has not been pressed yet
+          allAnswersSubmitted && oneAnswer === userAnswers[questionIndex] && oneAnswer === oneQuestion.correct_answer && "green", 
+          allAnswersSubmitted && oneAnswer === userAnswers[questionIndex] && oneAnswer !== oneQuestion.correct_answer && "red",
+          allAnswersSubmitted && oneAnswer !== userAnswers[questionIndex] && oneAnswer === oneQuestion.correct_answer && "correct-not-selected"
+        //all answers are submitted && the answer we are looping over is the same as the answer the user selected for this question && this one looped answer is correct
         )}
         aria-pressed={userAnswers[questionIndex] === oneAnswer}
         >
