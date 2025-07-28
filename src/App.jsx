@@ -23,11 +23,11 @@ function App() {
     console.log("new game")
   }
   
-  const combineAllAnswers = (correct, incorrect) => {
-    const allAnswers = [...incorrect]
+  const combineAllAnswerOptions = (correct, incorrect) => {
+    const allAnswerOptions = [...incorrect]
     const randomIndex = Math.floor(Math.random() * (incorrect.length + 1))
-    allAnswers.splice(randomIndex,0, correct)
-    return allAnswers
+    allAnswerOptions.splice(randomIndex,0, correct)
+    return allAnswerOptions
   }
   
   React.useEffect(()=>{
@@ -37,7 +37,7 @@ function App() {
       const data = await res.json()
       
       const readyQuestions = data.results.map(question => ({
-        ...question, allAnswers: combineAllAnswers(question.correct_answer, question.incorrect_answers)
+        ...question, allAnswerOptions: combineAllAnswerOptions(question.correct_answer, question.incorrect_answers)
       }))
       
       setQuestions(readyQuestions)
@@ -51,7 +51,7 @@ function App() {
   const questionSection = questions
   //MAPPING OVER QUESTIONS
   ? questions.map((oneQuestion, questionIndex) => { 
-    const allAnswersArr = oneQuestion.allAnswers
+    const allAnswerOptionsArr = oneQuestion.allAnswerOptions
 
     {/*MAPPING OVER QUESTIONS */}
     return (
@@ -60,7 +60,7 @@ function App() {
 
   {/*MAPPING OVER ANSWERS */}
       <div className="answers-btns-div">
-      {allAnswersArr.map((oneAnswer, answerIndex) => (
+      {allAnswerOptionsArr.map((oneAnswer, answerIndex) => (
         <div key={oneAnswer} className="answer-wrapper">
         <input 
         type="radio" 
